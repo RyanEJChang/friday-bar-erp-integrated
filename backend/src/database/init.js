@@ -1,7 +1,7 @@
 // backend/src/database/init.js
 // Friday's Bar ERP 資料庫初始化程式
 
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config({ path: '../.env' });
 const database = require('./connection');
 
 // 資料表結構定義 

@@ -111,6 +111,16 @@ app.get('/test-items', async (req, res) => {
     }
 });
 
+// ==========================================
+// 業務邏輯路由
+// ==========================================
+
+// 品項管理路由
+const itemsRouter = require('./routes/items');
+app.use('/api/items', itemsRouter);
+
+console.log('📋 品項管理 API 已載入: /api/items');
+
 // 6. 404 錯誤處理 (客人要求不存在的服務)
 app.use('*', (req, res) => {
     res.status(404).json({
