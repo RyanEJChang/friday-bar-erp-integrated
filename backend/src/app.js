@@ -121,6 +121,20 @@ app.use('/api/items', itemsRouter);
 
 console.log('📋 品項管理 API 已載入: /api/items');
 
+
+// 在品項管理路由後加入
+const ordersRouter = require('./routes/orders');
+app.use('/api/orders', ordersRouter);
+
+console.log('🍽️ 點單管理 API 已載入: /api/orders');
+
+
+const materialsRouter = require('./routes/materials');
+app.use('/api/materials', materialsRouter);
+
+console.log('📦 材料管理 API 已載入: /api/materials');
+
+
 // 6. 404 錯誤處理 (客人要求不存在的服務)
 app.use('*', (req, res) => {
     res.status(404).json({
