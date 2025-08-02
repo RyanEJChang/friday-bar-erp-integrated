@@ -19,11 +19,13 @@ const app = express();
 // 4.1 CORS 設定 - 允許前端網站連接
 app.use(cors({
     origin: [
-        process.env.FRONTEND_URL || "http://localhost:3000",
-        "file://",
-        "null"
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        process.env.FRONTEND_URL || "http://localhost:3000"
     ],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // 4.2 JSON 解析 

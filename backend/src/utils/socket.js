@@ -198,7 +198,7 @@ class SocketManager {
         
         let message = '';
         let barMessage = '';  // 專門給內場的訊息
-
+        
         switch (action) {
             case 'claimed':
                 message = `${orderData.item_name} 已被 ${orderData.bartender} 認領`;
@@ -212,7 +212,7 @@ class SocketManager {
                 message = `訂單狀態已更新`;
                 barMessage = `🔄 訂單 ${orderData.id} 狀態更新`;
         }
-
+    
         // 通知外場
         this.io.to('front').emit('order_status_update', {
             type: 'order_status_update',
@@ -220,9 +220,9 @@ class SocketManager {
             data: orderData,
             message: message,
             timestamp: new Date().toISOString(),
-            sound: action === 'served'  // 出酒完成時播放提示音
+            sound: action === 'served' // 出酒完成時播放提示音
         });
-
+    
         // 通知管理員
         this.io.to('admin').emit('order_status_update', {
             type: 'order_status_update',
@@ -231,13 +231,13 @@ class SocketManager {
             message: message,
             timestamp: new Date().toISOString()
         });
-
+    
         // 同步更新內場其他使用者
         this.io.to('bar').emit('order_status_sync', {
             type: 'order_status_sync',
             action: action,
             data: orderData,
-            message: barMessage,  // 使用專門給內場的訊息
+            message: barMessage, // 使用專門給內場的訊息
             timestamp: new Date().toISOString(),
             details: {
                 order_id: orderData.id,
