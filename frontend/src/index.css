@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Friday's Bar ERP Design System - Modern Restaurant Management */
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 20 5% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Card system */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary - Restaurant Deep Blue */
+    --primary: 215 45% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 215 45% 20%;
+
+    /* Secondary - Warm Gold Accent */
+    --secondary: 45 85% 92%;
+    --secondary-foreground: 215 25% 15%;
+
+    /* Success - Fresh Green */
+    --success: 145 63% 42%;
+    --success-foreground: 0 0% 98%;
+    --success-light: 145 63% 95%;
+
+    /* Warning - Warm Orange */
+    --warning: 35 91% 65%;
+    --warning-foreground: 0 0% 98%;
+    --warning-light: 35 91% 95%;
+
+    /* Error - Alert Red */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --destructive-light: 0 72% 95%;
+
+    /* Neutral tones */
+    --muted: 215 20% 95%;
+    --muted-foreground: 215 15% 55%;
+    --accent: 215 20% 95%;
+    --accent-foreground: 215 25% 25%;
+
+    /* Interface elements */
+    --border: 215 20% 90%;
+    --input: 215 20% 95%;
+    --ring: 215 45% 25%;
+
+    /* Sidebar system */
+    --sidebar-background: 215 25% 18%;
+    --sidebar-foreground: 215 20% 85%;
+    --sidebar-primary: 45 85% 55%;
+    --sidebar-primary-foreground: 215 25% 15%;
+    --sidebar-accent: 215 25% 25%;
+    --sidebar-accent-foreground: 215 20% 85%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 45 85% 55%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(215 45% 25%), hsl(215 45% 35%));
+    --gradient-accent: linear-gradient(135deg, hsl(45 85% 55%), hsl(45 85% 65%));
+    --gradient-warm: linear-gradient(135deg, hsl(20 15% 98%), hsl(45 25% 96%));
+    --gradient-success: linear-gradient(135deg, hsl(145 63% 42%), hsl(145 63% 52%));
+
+    /* Shadows */
+    --shadow-elegant: 0 4px 20px -4px hsl(215 45% 25% / 0.15);
+    --shadow-card: 0 2px 10px -2px hsl(215 25% 15% / 0.08);
+    --shadow-glow: 0 0 30px hsl(45 85% 55% / 0.25);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 215 25% 8%;
+    --foreground: 215 20% 85%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 215 20% 85%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 215 20% 85%;
+
+    --primary: 45 85% 55%;
+    --primary-foreground: 215 25% 15%;
+    --primary-hover: 45 85% 60%;
+
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 215 20% 85%;
+
+    --success: 145 63% 52%;
+    --success-foreground: 215 25% 8%;
+    --success-light: 145 63% 15%;
+
+    --warning: 35 91% 55%;
+    --warning-foreground: 215 25% 8%;
+    --warning-light: 35 91% 15%;
+
+    --destructive: 0 72% 61%;
+    --destructive-foreground: 215 25% 8%;
+    --destructive-light: 0 72% 15%;
+
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 15% 65%;
+    --accent: 215 25% 15%;
+    --accent-foreground: 215 20% 85%;
+
+    --border: 215 25% 18%;
+    --input: 215 25% 15%;
+    --ring: 45 85% 55%;
+
+    --sidebar-background: 215 25% 5%;
+    --sidebar-foreground: 215 20% 85%;
+    --sidebar-primary: 45 85% 55%;
+    --sidebar-primary-foreground: 215 25% 8%;
+    --sidebar-accent: 215 25% 12%;
+    --sidebar-accent-foreground: 215 20% 85%;
+    --sidebar-border: 215 25% 10%;
+    --sidebar-ring: 45 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
