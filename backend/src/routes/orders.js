@@ -342,8 +342,22 @@ router.post('/', async (req, res) => {
             // 提交交易
             await database.commit();
             
+            // 加入這段 - 即時通知內場
+            const socketManager = req.app.get('socketManager');
+            if (socketManager) {
+                socketManager.broadcastNewOrder({
+                    id: frontOrderId,
+                    table_number: table_number.trim(),
+                    item_name: item_name.trim(),
+                    base_liquor: item.base_liquor,
+                    total_price: financials.total_price,
+                    orderer: orderer.trim(),
+                    order_time: new Date().toISOString()
+                });
+            }
+
             console.log(`✅ 訂單建立成功: 桌號 ${table_number}, 品項 ${item_name}`);
-            
+
             // TODO: 這裡未來會加入 Socket.io 即時通知內場
             
             res.status(201).json({
@@ -422,6 +436,18 @@ router.put('/:id/claim', async (req, res) => {
         
         console.log(`✅ 訂單 ${id} 已被 ${bartender} 認領`);
         
+        const socketManager = req.app.get('socketManager');
+        if (socketManager) {
+            socketManager.broadcastOrderStatusUpdate({
+                id: parseInt(id),
+                item_name: barOrder.item_name,
+                table_number: barOrder.table_number,
+                bartender: bartender.trim()
+            }, 'claimed');
+        }
+
+        console.log(`✅ 訂單 ${id} 已被 ${bartender} 認領`);
+        
         res.json({
             success: true,
             message: `訂單已被 ${bartender} 認領`,
@@ -489,6 +515,16 @@ router.put('/:id/served', async (req, res) => {
             // 提交交易
             await database.commit();
             
+            // 加入即時通知
+            const socketManager = req.app.get('socketManager');
+            if (socketManager) {
+                socketManager.broadcastOrderStatusUpdate({
+                    id: parseInt(id),
+                    item_name: barOrder.item_name,
+                    table_number: barOrder.table_number
+                }, 'served');
+            }
+
             console.log(`✅ 訂單 ${id} 已完成`);
             
             // TODO: 這裡未來會加入 Socket.io 即時通知外場

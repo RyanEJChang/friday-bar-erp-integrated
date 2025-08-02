@@ -3,6 +3,9 @@
 
 // 1. 載入環境變數 (讀取 .env)
 require('dotenv').config({ path: '../.env' });
+const http = require('http');
+const socketManager = require('./utils/socket');
+
 
 // 2. 載入需要的套件 
 const express = require('express');
@@ -15,7 +18,11 @@ const app = express();
 
 // 4.1 CORS 設定 - 允許前端網站連接
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+        process.env.FRONTEND_URL || "http://localhost:3000",
+        "file://",
+        "null"
+    ],
     credentials: true
 }));
 
@@ -153,10 +160,10 @@ app.use((error, req, res, next) => {
     });
 });
 
-// 8. 啟動伺服器 (開店營業)
+// 8. 建立 HTTP 伺服器並整合 Socket.io (開店營業 + 即時通訊)
 const PORT = process.env.PORT || 3001;
 
-// 在 app.listen() 之前加入
+// 除錯資訊
 console.log('🔍 除錯資訊:');
 console.log('PORT from env:', process.env.PORT);
 console.log('Final PORT:', PORT);
@@ -164,7 +171,17 @@ console.log('Node version:', process.version);
 console.log('Platform:', process.platform);
 console.log('---');
 
-const server = app.listen(PORT, '0.0.0.0', () => {
+// 建立 HTTP 伺服器
+const server = http.createServer(app);
+
+// 初始化 Socket.io
+const io = socketManager.initialize(server);
+
+// 將 socketManager 設定到 app 中供其他模組使用
+app.set('socketManager', socketManager);
+
+// 啟動伺服器
+server.listen(PORT, '0.0.0.0', () => {
     // 啟動成功後的額外檢查
     const address = server.address();
     console.log('🔍 伺服器實際監聽:');
@@ -179,6 +196,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 🌐 伺服器地址: http://localhost:${PORT}
 📚 API 文件:   http://localhost:${PORT}/api
 🏥 健康檢查:   http://localhost:${PORT}/health
+🔌 Socket.io:  已啟用即時同步功能
 🌍 環境模式:   ${process.env.NODE_ENV || 'development'}
 ⏰ 啟動時間:   ${new Date().toLocaleString('zh-TW')}
 ======================================
